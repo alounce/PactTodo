@@ -1,0 +1,363 @@
+{
+  "consumer": {
+    "name": "TodosClient"
+  },
+  "provider": {
+    "name": "TodosAPI"
+  },
+  "interactions": [
+    {
+      "description": "create new todo",
+      "request": {
+        "method": "post",
+        "path": "/api/todos",
+        "headers": {
+          "Accept": "application/json"
+        },
+        "body": {
+          "category": "Ideas",
+          "title": "Do something useful",
+          "priority": 2,
+          "completed": false,
+          "details": "It should be really valuable"
+        },
+        "matchingRules": {
+          "$.body.category": {
+            "match": "type"
+          },
+          "$.body.title": {
+            "match": "type"
+          },
+          "$.body.priority": {
+            "match": "type"
+          },
+          "$.body.completed": {
+            "match": "type"
+          },
+          "$.body.details": {
+            "match": "type"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "category": "Ideas",
+          "title": "Do something useful",
+          "priority": 2,
+          "completed": false,
+          "id": 19,
+          "details": "It should be really valuable"
+        },
+        "matchingRules": {
+          "$.body.category": {
+            "match": "type"
+          },
+          "$.body.title": {
+            "match": "type"
+          },
+          "$.body.priority": {
+            "match": "type"
+          },
+          "$.body.completed": {
+            "match": "type"
+          },
+          "$.body.details": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "delete todo",
+      "providerState": "todo item exists",
+      "request": {
+        "method": "delete",
+        "path": "/api/todos/12",
+        "headers": {
+          "Accept": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "description": "delete todo",
+      "providerState": "todo item does not exists",
+      "request": {
+        "method": "delete",
+        "path": "/api/todos/999",
+        "headers": {
+          "Accept": "application/json"
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "description": "a request for all todos",
+      "providerState": "we have a todo collection",
+      "request": {
+        "method": "get",
+        "path": "/api/todos",
+        "headers": {
+          "Accept": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": [
+          {
+            "category": "home",
+            "completed": false,
+            "id": 1,
+            "priority": 1,
+            "details": "New switch was already bought",
+            "title": "Fix switch in bathrom"
+          },
+          {
+            "category": "home",
+            "completed": false,
+            "id": 1,
+            "priority": 1,
+            "details": "New switch was already bought",
+            "title": "Fix switch in bathrom"
+          },
+          {
+            "category": "home",
+            "completed": false,
+            "id": 1,
+            "priority": 1,
+            "details": "New switch was already bought",
+            "title": "Fix switch in bathrom"
+          }
+        ],
+        "matchingRules": {
+          "$.body": {
+            "min": 3
+          },
+          "$.body[*].*": {
+            "match": "type"
+          },
+          "$.body[*].category": {
+            "match": "type"
+          },
+          "$.body[*].completed": {
+            "match": "type"
+          },
+          "$.body[*].id": {
+            "match": "type"
+          },
+          "$.body[*].priority": {
+            "match": "type"
+          },
+          "$.body[*].details": {
+            "match": "type"
+          },
+          "$.body[*].title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for a todo",
+      "providerState": "todo item exists",
+      "request": {
+        "method": "get",
+        "path": "/api/todos/3",
+        "headers": {
+          "Accept": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "details": "And of course something useful",
+          "category": "test",
+          "title": "To do something important",
+          "id": 3,
+          "priority": 2,
+          "completed": false
+        },
+        "matchingRules": {
+          "$.body.details": {
+            "match": "type"
+          },
+          "$.body.category": {
+            "match": "type"
+          },
+          "$.body.title": {
+            "match": "type"
+          },
+          "$.body.id": {
+            "match": "type"
+          },
+          "$.body.priority": {
+            "match": "type"
+          },
+          "$.body.completed": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for a todo",
+      "providerState": "todo item does not exist",
+      "request": {
+        "method": "get",
+        "path": "/api/todos/999",
+        "headers": {
+          "Accept": "application/json"
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "description": "update todo",
+      "providerState": "todo item exists",
+      "request": {
+        "method": "put",
+        "path": "/api/todos/23",
+        "headers": {
+          "Accept": "application/json"
+        },
+        "body": {
+          "title": "Do something useful: Updated!",
+          "completed": false,
+          "id": 23,
+          "details": "It should be really valuable: Updated!",
+          "category": "Ideas",
+          "priority": 1
+        },
+        "matchingRules": {
+          "$.body.title": {
+            "match": "type"
+          },
+          "$.body.completed": {
+            "match": "type"
+          },
+          "$.body.id": {
+            "match": "type"
+          },
+          "$.body.details": {
+            "match": "type"
+          },
+          "$.body.category": {
+            "match": "type"
+          },
+          "$.body.priority": {
+            "match": "type"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "title": "Do something useful: Updated!",
+          "completed": false,
+          "id": 23,
+          "details": "It should be really valuable: Updated!",
+          "category": "Ideas",
+          "priority": 1
+        },
+        "matchingRules": {
+          "$.body.title": {
+            "match": "type"
+          },
+          "$.body.completed": {
+            "match": "type"
+          },
+          "$.body.id": {
+            "match": "type"
+          },
+          "$.body.details": {
+            "match": "type"
+          },
+          "$.body.category": {
+            "match": "type"
+          },
+          "$.body.priority": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "update todo",
+      "providerState": "todo item does not exists",
+      "request": {
+        "method": "put",
+        "path": "/api/todos/999",
+        "headers": {
+          "Accept": "application/json"
+        },
+        "body": {
+          "category": "Ideas",
+          "completed": false,
+          "priority": 1,
+          "title": "Do something useful",
+          "id": 999,
+          "details": "It should be really valuable"
+        },
+        "matchingRules": {
+          "$.body.category": {
+            "match": "type"
+          },
+          "$.body.completed": {
+            "match": "type"
+          },
+          "$.body.priority": {
+            "match": "type"
+          },
+          "$.body.title": {
+            "match": "type"
+          },
+          "$.body.id": {
+            "match": "type"
+          },
+          "$.body.details": {
+            "match": "type"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}
